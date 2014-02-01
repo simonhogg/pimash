@@ -2,6 +2,25 @@
 	<head>
 		<link href='http://fonts.googleapis.com/css?family=Roboto+Condensed:400,300,700' rel='stylesheet' type='text/css'>
 		<link rel="stylesheet" type="text/css" href="static/style.css">
+		 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+		 <script type=text/javascript>
+  				$SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
+
+  				$(function() {
+  					startRefresh();
+  				});
+
+  				function startRefresh() {
+  					setTimeout(startRefresh, 1000);
+  					$.getJSON($SCRIPT_ROOT + '/_refresh', null, 
+  						function(data) {
+							$("#tempValue").text(data.temp);
+							$("#setpointValue").text(data.setpoint);
+  						}
+					);
+				} 
+
+		</script>
 		<title>Temperature</title>
 	</head>
 
@@ -9,11 +28,11 @@
 		<div class="valueContainer">
 			<div id="temp" class="labelledValue">
 				<span class='label'>Current Temp</span>
-				<span class='value'>{{ temp }}</span>
+				<span class='value'><span id="tempValue">{{ temp }}</span>&deg;F</span>
 			</div>
 			<div id="setpoint" class="labelledValue">
 				<span class='label'>Setpoint</span>
-				<span class='value'>{{ setpoint }}</span>
+				<span class='value'><span id="setpointValue">{{ setpoint }}</span>&deg;F</span>
 			</div>
 		</div>
 	</body>
