@@ -1,24 +1,44 @@
 from flask import Flask, render_template, jsonify, request
-import simpleTemp
+from pimashio import PimashIO
 app = Flask(__name__)
 
-_setpoint = 155.0
+setpoint = 80.0
+element = False
+io = PimashIO()
 
 @app.route("/")
 def index():
-	tempData = {
-		'temp' :  '%.1f' % simpleTemp.getTemp()
-		'setpoint' : '%.1f' % _setpoint
-	}
-	return render_template('main.html', **tempData)
+    tempdata = get_tempdata()
+    return render_template('main.html', **tempdata)
 
 @app.route('/_refresh')
 def refresh():
-	tempData = {
-		'temp' :  '%.1f' % simpleTemp.getTemp()
-		'setpoint' : '%.1f' % _setpoint
-	}
-	return jsonify(tempdata)
+    return jsonify(get_tempdata())
+
+def get_tempdata():
+    # get the current temperature
+    t = io.get_temp()
+    # check if we need to turn the element or not
+    if t > setpoint:
+        io.element_off()
+        e = 'Off'
+    else:
+        io.element_on()
+        e = 'On'
+    # create the tempdata packet
+    tempdata = {'temp' :  '%.1f' % t,
+        'setpoint' : '%.1f' % setpoint,
+        'element' : e
+        }
+    print(tempdata)
+    return tempdata
+
+@app.route('/_updateSetPoint/<sp>')
+def update_setpoint(sp):
+    global setpoint
+    setpoint = float(sp)
+    print(repr(setpoint))
+    return sp
 
 if __name__ == "__main__":
-	app.run(host='10.0.1.33', port=80, debug=True)
+    app.run(host='10.0.1.33', port=80, debug=True)

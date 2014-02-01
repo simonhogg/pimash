@@ -16,9 +16,14 @@
   						function(data) {
 							$("#tempValue").text(data.temp);
 							$("#setpointValue").text(data.setpoint);
+							$("#elementValue").text(data.element);
   						}
 					);
 				} 
+
+				function updateSetpoint(sp) {
+					$.get($SCRIPT_ROOT + '/_updateSetPoint/' + sp)
+				}
 
 		</script>
 		<title>Temperature</title>
@@ -34,6 +39,17 @@
 				<span class='label'>Setpoint</span>
 				<span class='value'><span id="setpointValue">{{ setpoint }}</span>&deg;F</span>
 			</div>
+			<div id="element" class="labelledValue">
+				<span class='label'>Element</span>
+				<span class='value'><span id="elementValue">{{ element }}</span></span>
+			</div>
 		</div>
+		<div id="links">
+			<a href="javascript:updateSetpoint('153')">153&deg;F</a>
+			<a href="javascript:updateSetpoint('153')">155&deg;F</a>
+			<a href="javascript:updateSetpoint('140')">140&deg;F</a>
+			<a href="javascript:updateSetpoint('80')">80&deg;F</a>
+		</div>
+
 	</body>
 </html>

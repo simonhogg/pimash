@@ -35,3 +35,16 @@ span.value {
 	font-size: 200%;
 }
 
+#element .value{
+	font-size: 200%;
+}
+
+#links {
+	margin-left: 3em;
+	margin-top: 2em;
+}
+
+a {
+	padding: 1em;
+	font-size: 12pt;
+}
