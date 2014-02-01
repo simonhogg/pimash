@@ -2,13 +2,13 @@ from flask import Flask, render_template, jsonify, request
 import simpleTemp
 app = Flask(__name__)
 
-setpoint = 155.0
+_setpoint = 155.0
 
 @app.route("/")
 def index():
 	tempData = {
 		'temp' :  '%.1f' % simpleTemp.getTemp()
-		'setpoint' : '%.1f' % setpoint
+		'setpoint' : '%.1f' % _setpoint
 	}
 	return render_template('main.html', **tempData)
 
@@ -16,7 +16,7 @@ def index():
 def refresh():
 	tempData = {
 		'temp' :  '%.1f' % simpleTemp.getTemp()
-		'setpoint' : '%.1f' % setpoint
+		'setpoint' : '%.1f' % _setpoint
 	}
 	return jsonify(tempdata)
 
