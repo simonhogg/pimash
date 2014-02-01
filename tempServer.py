@@ -3,9 +3,9 @@ import simpleTemp
 app = Flask(__name__)
 
 @app.route("/")
-def hello():
+def index():
 	tempData = {
-		'temp' : repr(simpleTemp.getTemp())
+		'temp' :  '%.1f' % simpleTemp.getTemp()
 	}
 	return render_template('main.html', **tempData)
 
