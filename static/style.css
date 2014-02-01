@@ -1,0 +1,37 @@
+body {
+	font-family: 'Roboto Condensed', sans-serif;   
+}
+
+p {   
+ 	color:#222;    
+ 	text-indent: 20px;        
+}
+
+.value {
+	font-size: 400%;
+}
+
+span.label {
+	vertical-align: top;
+	padding-top: 1em;
+	display: table-cell;
+	padding-left: 3em;
+	padding-right: 3em;
+}
+
+span.value {
+	display: table-cell;
+}
+
+.labelledValue {
+	display: table-row;
+}
+
+.valueContainer {
+	display: table;
+}
+
+#setpoint .value{
+	font-size: 200%;
+}
+
