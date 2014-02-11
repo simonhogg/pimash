@@ -1,17 +1,19 @@
 pimash
 ======
 
-#Simon's Raspberry Pi Mash Controller for Brewing
+Simon's Raspberry Pi Mash Controller for Brewing
 
-##Assumptions
+###Assumptions
 
-###Hardware
+Documentation is poor. It may improve, it might not.
+
+####Hardware
 
 Assumes that you have a DS18B20 1-Wire digital temperature sensor connected to GPIO4 and a relay connected to GPIO1.
 
 The relay controls a heat source that will cause the temperature to rise. I use an eBIAB setup where the relay is an SSR connected to an electric heating element.
 
-###Software
+####Software
 
 Right now, I require a web client to continually ping the server to keep the control loop alive.
 
