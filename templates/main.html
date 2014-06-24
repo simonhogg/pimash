@@ -30,7 +30,7 @@
 			  	$(function() {
 				    var spinner = $( "#spinner" ).spinner();
 				    $( "#setvalue" ).click(function() {
-				      updateSetpoint( "value" );
+				      updateSetpoint( spinner.spinner("value") );
 				    });
 				    $( "button" ).button();
 				  });
