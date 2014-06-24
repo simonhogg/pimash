@@ -23,7 +23,8 @@
 				} 
 
 				function updateSetpoint(sp) {
-					$.get($SCRIPT_ROOT + '/_updateSetPoint/' + sp)
+					$.get($SCRIPT_ROOT + '/_updateSetPoint/' + sp);
+					spinner.spinner("value", sp);
 				}
 				
 			  	$(function() {
