@@ -23,16 +23,17 @@
 				} 
 
 				function updateSetpoint(sp) {
+					alert(sp)
 					$.get($SCRIPT_ROOT + '/_updateSetPoint/' + sp)
 				}
 				
-				  $(function() {
-					    var spinner = $( "#spinner" ).spinner();
-					    $( "#setvalue" ).click(function() {
-					      updateSetpoint( "value" );
-					    });
-					    $( "button" ).button();
-					  });
+			  	$(function() {
+				    var spinner = $( "#spinner" ).spinner();
+				    $( "#setvalue" ).click(function() {
+				      updateSetpoint( "value" );
+				    });
+				    $( "button" ).button();
+				  });
 
 		</script>
 		<title>Temperature</title>
@@ -59,10 +60,8 @@
 			<a href="javascript:updateSetpoint('140')">140&deg;F</a>
 			<a href="javascript:updateSetpoint('80')">80&deg;F</a>
 			<br />
-			<form>
-				<input id="spinner" name="value">
-				<button id="setvalue">Set</button>
-			</form>
+			<input id="spinner" name="value">
+			<button id="setvalue">Set</button>
 		</div>
 
 	</body>
