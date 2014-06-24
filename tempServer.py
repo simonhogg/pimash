@@ -16,21 +16,28 @@ def refresh():
     return jsonify(get_tempdata())
 
 def get_tempdata():
-    # get the current temperature
-    t = io.get_temp()
-    # check if we need to turn the element or not
-    if t > setpoint:
-        io.element_off()
-        e = 'Off'
-    else:
-        io.element_on()
-        e = 'On'
-    # create the tempdata packet
-    tempdata = {'temp' :  '%.1f' % t,
-        'setpoint' : '%.1f' % setpoint,
-        'element' : e
+    try:
+        # get the current temperature
+        t = io.get_temp()
+        # check if we need to turn the element or not
+        if t > setpoint:
+            io.element_off()
+            e = 'Off'
+        else:
+            io.element_on()
+            e = 'On'
+        # create the tempdata packet
+        tempdata = {'temp' :  '%.1f' % t,
+            'setpoint' : '%.1f' % setpoint,
+            'element' : e
+            }
+        print(tempdata)
+    except:
+        print("Error getting temperature data")
+        tempdata = {'temp' :  '%.1f' % 0,
+        'setpoint' : '%.1f' % 0,
+        'element' : false
         }
-    print(tempdata)
     return tempdata
 
 @app.route('/_updateSetPoint/<sp>')
