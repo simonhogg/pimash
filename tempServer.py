@@ -36,7 +36,7 @@ def get_tempdata():
         print("Error getting temperature data")
         tempdata = {'temp' :  '%.1f' % 0,
         'setpoint' : '%.1f' % 0,
-        'element' : false
+        'element' : False
         }
     return tempdata
 
