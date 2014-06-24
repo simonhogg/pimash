@@ -28,7 +28,7 @@
 				
 				  $(function() {
 					    var spinner = $( "#spinner" ).spinner();
-					    $( "#getvalue" ).click(function() {
+					    $( "#setvalue" ).click(function() {
 					      updateSetpoint( "value" );
 					    });
 					    $( "button" ).button();
@@ -58,6 +58,7 @@
 			<a href="javascript:updateSetpoint('155')">155&deg;F</a>
 			<a href="javascript:updateSetpoint('140')">140&deg;F</a>
 			<a href="javascript:updateSetpoint('80')">80&deg;F</a>
+			<br />
 			<form>
 				<input id="spinner" name="value">
 				<button id="setvalue">Set</button>
