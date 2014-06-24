@@ -3,6 +3,7 @@
 		<link href='http://fonts.googleapis.com/css?family=Roboto+Condensed:400,300,700' rel='stylesheet' type='text/css'>
 		<link rel="stylesheet" type="text/css" href="static/style.css">
 		 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+		 <script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
 		 <script type=text/javascript>
   				$SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
 
@@ -24,6 +25,14 @@
 				function updateSetpoint(sp) {
 					$.get($SCRIPT_ROOT + '/_updateSetPoint/' + sp)
 				}
+				
+				  $(function() {
+					    var spinner = $( "#spinner" ).spinner();
+					    $( "#getvalue" ).click(function() {
+					      updateSetpoint( "value" );
+					    });
+					    $( "button" ).button();
+					  });
 
 		</script>
 		<title>Temperature</title>
@@ -49,6 +58,10 @@
 			<a href="javascript:updateSetpoint('155')">155&deg;F</a>
 			<a href="javascript:updateSetpoint('140')">140&deg;F</a>
 			<a href="javascript:updateSetpoint('80')">80&deg;F</a>
+			<form>
+				<input id="spinner" name="value">
+				<button id="setvalue">Set</button>
+			</form>
 		</div>
 
 	</body>
