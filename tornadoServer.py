@@ -1,4 +1,5 @@
-from tornado import ioloop, web
+import tornado.ioloop
+import tornado.web
 from flask import jsonify
 
 from pimashio import PimashIO
