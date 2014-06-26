@@ -48,7 +48,8 @@ class MainHandler(tornado.web.RequestHandler):
 
 class RefreshHandler(tornado.web.RequestHandler):
 	def get(self):
-		self.write(tornado.escape.json_encode(get_tempdata()))
+		#self.write(tornado.escape.json_encode(get_tempdata()))
+		self.write(get_tempdata())
 
 settings = dict(
         template_path=os.path.join(os.path.dirname(__file__), "templates"),
