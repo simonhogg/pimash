@@ -58,7 +58,7 @@ settings = dict(
 application = tornado.web.Application([
 	(r'/', MainHandler),
 	(r'/_refresh', RefreshHandler),
-	(r'/static(.*)', tornado.web.StaticFileHandler, {'path': '/static'})
+	(r'/static(.*)', tornado.web.StaticFileHandler, {'path': './static'})
 	], **settings)
 
 if __name__ == "__main__":
