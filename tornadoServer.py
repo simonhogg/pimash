@@ -3,6 +3,7 @@ import tornado.web
 import tornado.escape
 import tornado.template
 
+import os.path
 
 from pimashio import PimashIO
 
@@ -55,8 +56,9 @@ settings = dict(
 ) 
 
 application = tornado.web.Application([
-	(r"/", MainHandler),
-	(r"/_refresh", RefreshHandler)
+	(r'/', MainHandler),
+	(r'/_refresh', RefreshHandler),
+	(r'/static(.*)', tornado.web.StaticFileHandler, {'path': '/static'})
 	], **settings)
 
 if __name__ == "__main__":
