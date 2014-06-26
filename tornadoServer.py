@@ -43,16 +43,21 @@ def get_tempdata():
 # Server Code
 class MainHandler(tornado.web.RequestHandler):
 	def get(self):
-		self.render('templates/main.html', temp=temp, setpoint=setpoint, element=element)
+		self.render('main.html', temp=temp, setpoint=setpoint, element=element)
 
 class RefreshHandler(tornado.web.RequestHandler):
 	def get(self):
 		self.write(tornado.escape.json_encode(get_tempdata()))
 
+settings = dict(
+        template_path=os.path.join(os.path.dirname(__file__), "templates"),
+        debug=True
+) 
+
 application = tornado.web.Application([
 	(r"/", MainHandler),
 	(r"/_refresh", RefreshHandler)
-	], debug=True)
+	], **settings)
 
 if __name__ == "__main__":
 	application.listen(80)
