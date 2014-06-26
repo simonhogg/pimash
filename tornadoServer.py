@@ -51,6 +51,12 @@ class RefreshHandler(tornado.web.RequestHandler):
 		#self.write(tornado.escape.json_encode(get_tempdata()))
 		self.write(get_tempdata())
 
+class UpdateSetpointHandler(tornado.web.RequestHandler):
+	def get(self, sp):
+		global setpoint
+    	setpoint = float(sp)
+    	self.finish()
+
 settings = dict(
         template_path=os.path.join(os.path.dirname(__file__), "templates"),
         debug=True
@@ -59,6 +65,7 @@ settings = dict(
 application = tornado.web.Application([
 	(r'/', MainHandler),
 	(r'/_refresh', RefreshHandler),
+	(r'/_updateSetPoint/(.*)', UpdateSetpointHandler),
 	(r'/static/(.*)', tornado.web.StaticFileHandler, {'path': './static'})
 	], **settings)
 
