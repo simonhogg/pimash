@@ -8,7 +8,7 @@ p {
 }
 
 .value {
-	font-size: 400%;
+	font-size: 800%;
 }
 
 span.label {
@@ -17,6 +17,11 @@ span.label {
 	display: table-cell;
 	padding-left: 3em;
 	padding-right: 3em;
+	font-size: 150%;
+}
+
+#temp .label {
+	padding-top: 2em;
 }
 
 span.value {
@@ -32,11 +37,11 @@ span.value {
 }
 
 #setpoint .value{
-	font-size: 200%;
+	font-size: 400%;
 }
 
 #element .value{
-	font-size: 200%;
+	font-size: 400%;
 }
 
 #links {
@@ -46,5 +51,5 @@ span.value {
 
 a {
 	padding: 1em;
-	font-size: 12pt;
+	font-size: 16pt;
 }
