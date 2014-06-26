@@ -43,19 +43,19 @@ def get_tempdata():
 
 # Server Code
 class MainHandler(tornado.web.RequestHandler):
-	def get(self):
-		self.render('main.html', temp=temp, setpoint=setpoint, element=element)
+    def get(self):
+        self.render('main.html', temp=temp, setpoint=setpoint, element=element)
 
 class RefreshHandler(tornado.web.RequestHandler):
-	def get(self):
-		#self.write(tornado.escape.json_encode(get_tempdata()))
-		self.write(get_tempdata())
+    def get(self):
+        #self.write(tornado.escape.json_encode(get_tempdata()))
+        self.write(get_tempdata())
 
 class UpdateSetpointHandler(tornado.web.RequestHandler):
-	def get(self, sp):
-		global setpoint
-    	setpoint = float(sp)
-    	self.finish()
+    def get(self, sp):
+        global setpoint
+        setpoint = float(sp)
+        self.finish()
 
 settings = dict(
         template_path=os.path.join(os.path.dirname(__file__), "templates"),
@@ -63,12 +63,12 @@ settings = dict(
 ) 
 
 application = tornado.web.Application([
-	(r'/', MainHandler),
-	(r'/_refresh', RefreshHandler),
-	(r"/_updateSetPoint/([0-9]+)", UpdateSetpointHandler),
-	(r'/static/(.*)', tornado.web.StaticFileHandler, {'path': './static'})
-	], **settings)
+    (r'/', MainHandler),
+    (r'/_refresh', RefreshHandler),
+    (r"/_updateSetPoint/([0-9]+)", UpdateSetpointHandler),
+    (r'/static/(.*)', tornado.web.StaticFileHandler, {'path': './static'})
+    ], **settings)
 
 if __name__ == "__main__":
-	application.listen(80)
-	tornado.ioloop.IOLoop.instance().start()
+    application.listen(80)
+    tornado.ioloop.IOLoop.instance().start()
