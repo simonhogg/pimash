@@ -1,5 +1,6 @@
 import tornado.ioloop
 import tornado.web
+import tornado.escape
 from flask import jsonify
 
 from pimashio import PimashIO
@@ -44,7 +45,7 @@ class MainHandler(tornado.web.RequestHandler):
 
 class RefreshHandler(tornado.web.RequestHandler):
 	def get(self):
-		self.write(jsonify(get_tempdata()))
+		self.write(tornado.escape.json_encode(get_tempdata()))
 
 application = tornado.web.Application([
 	(r"/", MainHandler),
