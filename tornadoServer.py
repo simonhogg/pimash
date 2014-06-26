@@ -65,7 +65,7 @@ settings = dict(
 application = tornado.web.Application([
 	(r'/', MainHandler),
 	(r'/_refresh', RefreshHandler),
-	(r'/_updateSetPoint/([0-9]+)', UpdateSetpointHandler),
+	(r"/_updateSetPoint/([0-9]+)", UpdateSetpointHandler),
 	(r'/static/(.*)', tornado.web.StaticFileHandler, {'path': './static'})
 	], **settings)
 
