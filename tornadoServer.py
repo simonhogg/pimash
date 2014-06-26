@@ -9,6 +9,6 @@ application = tornado.web.Application([
 	(r"/", MainHandler)
 	])
 
-if __name == "__main__":
+if __name__ == "__main__":
 	application.listen(80)
 	tornado.ioloop.IOLoop.instance().start()
