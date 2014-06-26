@@ -1,14 +1,16 @@
 import tornado.ioloop
 import tornado.web
 import tornado.escape
-from flask import jsonify
+import tornado.template
+
 
 from pimashio import PimashIO
 
 # Variables
-
+temp = 72.0
 setpoint = 80.0
 element = False
+
 io = PimashIO()
 
 # App Logic
@@ -41,7 +43,7 @@ def get_tempdata():
 # Server Code
 class MainHandler(tornado.web.RequestHandler):
 	def get(self):
-		self.write("Hello, world")
+		self.render('templates/main.html', temp=temp, setpoint=setpoint, element=element)
 
 class RefreshHandler(tornado.web.RequestHandler):
 	def get(self):
