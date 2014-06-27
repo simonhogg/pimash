@@ -44,7 +44,8 @@ def get_tempdata():
 # Server Code
 class MainHandler(tornado.web.RequestHandler):
     def get(self):
-        self.render('main.html', temp=temp, setpoint=setpoint, element=element)
+       #self.render('main.html', temp=temp, setpoint=setpoint, element=element)
+       self.render('ngindex.html', temp=temp, setpoint=setpoint, element=element)
 
 class RefreshHandler(tornado.web.RequestHandler):
     def get(self):
@@ -65,6 +66,7 @@ settings = dict(
 application = tornado.web.Application([
     (r'/', MainHandler),
     (r'/_refresh', RefreshHandler),
+    (r'/_temperature', RefreshHandler),
     (r"/_updateSetPoint/([0-9]+)", UpdateSetpointHandler),
     (r'/static/(.*)', tornado.web.StaticFileHandler, {'path': './static'})
     ], **settings)
