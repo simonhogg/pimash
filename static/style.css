@@ -53,3 +53,7 @@ a {
 	padding: 1em;
 	font-size: 16pt;
 }
+
+form {
+	margin-left: 2em;
+}

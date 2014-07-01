@@ -22,15 +22,14 @@
 			</div>
 		</div>
 		<div id="links">
-			<a href="javascript:updateSetpoint('104')">104&deg;F</a>
-			<a href="javascript:updateSetpoint('140')">140&deg;F</a>
-			<a href="javascript:updateSetpoint('153')">153&deg;F</a>
-			<a href="javascript:updateSetpoint('158')">158&deg;F</a>
-			<a href="javascript:updateSetpoint('170')">170&deg;F</a>
+			<a ng-href="#" ng-repeat="t in tc.tempArray" ng-click="tc.updateSetPoint(t)">{{!t}}&deg;F</a>
 			<br />
 			<br />
-			<input id="spinner" name="value">
-			<button id="setvalue">Set</button>
+			<form ng-submit="tc.updateSetPoint(tc.tempInput)">
+				Custom: 
+				<input id="spinner" name="value" ng-model="tc.tempInput">
+				<input type="submit" value="Set"></input>
+			</form>
 		</div>
 	</body>
 </html>

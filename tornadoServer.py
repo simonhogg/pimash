@@ -10,12 +10,12 @@ from pimashio import PimashIO
 
 # Variables
 
-
-g = dict(
-    temperature = 72.0
-    setpoint = 80.0
+class TempStatus:
+    temperature = 72.0,
+    setpoint = 80.0,
     element_status = '~'
-    )
+
+g = TempStatus()
 
 io = PimashIO()
 
@@ -28,12 +28,15 @@ def check_temp():
         g.temperature = io.get_temp()
         # check if we need to turn the element or not
         if temp > setpoint:
+            print('Temperature over setpoint | %.1f', g.temperature)
             io.element_off()
             g.element_status = 'Off'
         else:
+            print('Temperature under setpoint | %.1f', g.temperature)
             io.element_on()
             g.element_status = 'On'
     except:
+        print('No HW detected')
         g.temperature = random.randint(72,212)+0.1
         g.element_status = "Error"
         
@@ -54,8 +57,8 @@ class MainHandler(tornado.web.RequestHandler):
     global g
     def get(self):
         global g
-       #self.render('main.html', temp=temp, setpoint=setpoint, element=element)
-       self.render('ngindex.html', temp=g.temperature, setpoint=g.setpoint, element=g.element_status)
+        #self.render('main.html', temp=temp, setpoint=setpoint, element=element)
+        self.render('ngindex.html', temp=g.temperature, setpoint=g.setpoint, element=g.element_status)
 
 class RefreshHandler(tornado.web.RequestHandler):
     def get(self):
@@ -64,8 +67,9 @@ class RefreshHandler(tornado.web.RequestHandler):
 
 class UpdateSetpointHandler(tornado.web.RequestHandler):
     def get(self, sp):
-        global setpoint
-        setpoint = float(sp)
+        global g
+        g.setpoint = float(sp)
+        print('Setpoint updated to %.1f' % g.setpoint)
         self.finish()
 
 settings = dict(
