@@ -1,3 +1,5 @@
+#!/usr/bin/python
+
 import tornado.ioloop
 import tornado.web
 import tornado.escape
@@ -7,17 +9,20 @@ import random
 import os.path
 
 from pimashio import PimashIO
+from pimashdb import PimashDB
 
 # Variables
 
 class TempStatus:
     temperature = 72.0,
     setpoint = 80.0,
-    element_status = '~'
+    element_status = '~',
+    logging = True
 
 g = TempStatus()
 
 io = PimashIO()
+db = PimashDB()
 
 # App Logic
 
@@ -27,7 +32,7 @@ def check_temp():
         # get the current temperature
         g.temperature = io.get_temp()
         # check if we need to turn the element or not
-        if temp > setpoint:
+        if g.temperature > g.setpoint:
             print('Temperature over setpoint | %.1f', g.temperature)
             io.element_off()
             g.element_status = 'Off'
@@ -39,8 +44,15 @@ def check_temp():
         print('No HW detected')
         g.temperature = random.randint(72,212)+0.1
         g.element_status = "Error"
-        
-        
+
+def log_temp():
+    global g
+    if g.logging:
+        # attempt to log the temperature
+        db.log_temp('brewing', g.temperature)
+
+def get_log():
+    return db.get_log()
 
 def get_tempdata():
     global g
@@ -62,8 +74,11 @@ class MainHandler(tornado.web.RequestHandler):
 
 class RefreshHandler(tornado.web.RequestHandler):
     def get(self):
-        #self.write(tornado.escape.json_encode(get_tempdata()))
         self.write(get_tempdata())
+
+class LogRefreshHandler(tornado.web.RequestHandler):
+    def get(self):
+        self.write(get_log())
 
 class UpdateSetpointHandler(tornado.web.RequestHandler):
     def get(self, sp):
@@ -81,6 +96,7 @@ application = tornado.web.Application([
     (r'/', MainHandler),
     (r'/_refresh', RefreshHandler),
     (r'/_temperature', RefreshHandler),
+    (r'/_log', LogRefreshHandler),
     (r"/_updateSetPoint/([0-9]+)", UpdateSetpointHandler),
     (r'/static/(.*)', tornado.web.StaticFileHandler, {'path': './static'})
     ], **settings)
@@ -89,7 +105,9 @@ if __name__ == "__main__":
     application.listen(80)
     main_loop = tornado.ioloop.IOLoop.instance()
     # Create a periodic timer for our control loop
-    scheduler = tornado.ioloop.PeriodicCallback(check_temp, 1000, io_loop = main_loop)
-    # Start the timer and then the IOloop
-    scheduler.start()
+    temp_scheduler = tornado.ioloop.PeriodicCallback(check_temp, 1000, io_loop = main_loop)
+    log_scheduler = tornado.ioloop.PeriodicCallback(log_temp, 10000, io_loop = main_loop)
+    # Start the timers and then the IOloop
+    temp_scheduler.start()
+    log_scheduler.start()
     main_loop.start()
